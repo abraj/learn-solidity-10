@@ -35,12 +35,12 @@ build-ckt:
 setup-ckt-key:
 	mkdir -p setup2
 	# ------ circuit-specific (phase 2) trusted ceremony ------
-	# cd setup2 && snarkjs groth16 setup ../build/circuit.r1cs ../setup1/pot12_final.ptau circuit_0000.zkey
-	# cd setup2 && snarkjs zkey contribute circuit_0000.zkey circuit_0001.zkey --name="1st Contributor Name" -v -e="$$(openssl rand -base64 30)"
-	# # cd setup2 && snarkjs zkey contribute circuit_0001.zkey circuit_0002.zkey --name="2nd Contributor Name" -v -e="$$(openssl rand -base64 30)"
-	# cd setup2 && snarkjs zkey beacon circuit_0001.zkey circuit_final.zkey 4d6ffc28cf029b15686e864aa8d6cefb373498124cee0628e89b43f5c5bf62e0 10 -n="Final Beacon phase2"
+	cd setup2 && snarkjs groth16 setup ../build/circuit.r1cs ../setup1/pot12_final.ptau circuit_0000.zkey
+	cd setup2 && snarkjs zkey contribute circuit_0000.zkey circuit_0001.zkey --name="1st Contributor Name" -v -e="$$(openssl rand -base64 30)"
+	# cd setup2 && snarkjs zkey contribute circuit_0001.zkey circuit_0002.zkey --name="2nd Contributor Name" -v -e="$$(openssl rand -base64 30)"
+	cd setup2 && snarkjs zkey beacon circuit_0001.zkey circuit_final.zkey 4d6ffc28cf029b15686e864aa8d6cefb373498124cee0628e89b43f5c5bf62e0 10 -n="Final Beacon phase2"
 	# ------------------
-	cd setup2 && snarkjs plonk setup ../build/circuit.r1cs ../setup1/pot12_final.ptau circuit_final.zkey
+	# cd setup2 && snarkjs plonk setup ../build/circuit.r1cs ../setup1/pot12_final.ptau circuit_final.zkey
 	# cd setup2 && snarkjs fflonk setup ../build/circuit.r1cs ../setup1/pot12_final.ptau circuit_final.zkey
 
 key-export:
@@ -55,13 +55,13 @@ gen-witness:
 	cd proof && snarkjs wtns check ../build/circuit.r1cs witness.wtns
 
 gen-proof:
-	# cd proof && snarkjs groth16 prove ../setup2/circuit_final.zkey witness.wtns proof.json public.json
-	cd proof && snarkjs plonk prove ../setup2/circuit_final.zkey witness.wtns proof.json public.json
+	cd proof && snarkjs groth16 prove ../setup2/circuit_final.zkey witness.wtns proof.json public.json
+	# cd proof && snarkjs plonk prove ../setup2/circuit_final.zkey witness.wtns proof.json public.json
 	# cd proof && snarkjs fflonk prove ../setup2/circuit_final.zkey witness.wtns proof.json public.json
 
 verify-proof:
-	# cd proof && snarkjs groth16 verify ../setup2/verification_key.json public.json proof.json
-	cd proof && snarkjs plonk verify ../setup2/verification_key.json public.json proof.json
+	cd proof && snarkjs groth16 verify ../setup2/verification_key.json public.json proof.json
+	# cd proof && snarkjs plonk verify ../setup2/verification_key.json public.json proof.json
 	# cd proof && snarkjs fflonk verify ../setup2/verification_key.json public.json proof.json
 
 gen-sol:
