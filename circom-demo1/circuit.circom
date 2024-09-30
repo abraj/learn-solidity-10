@@ -1,14 +1,15 @@
 pragma circom 2.0.0;
 
 /* This circuit template checks that c is the multiplication of a and b. */
-template Multiplier2() {
+template Multiplier2(N) {
   // Declaration of signals
-  signal input a;
-  signal input b;
-  signal output c;
+  signal input in1;
+  signal input in2;
+  signal output out;
 
   // Constraints
-  c <== a * b;
+  out <== in1 * in2;
+  out === N;
 }
 
-component main = Multiplier2();
+component main = Multiplier2(12);
